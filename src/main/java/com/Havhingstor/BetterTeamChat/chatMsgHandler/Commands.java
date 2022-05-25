@@ -1,27 +1,25 @@
 package com.Havhingstor.BetterTeamChat.chatMsgHandler;
 
-// getString(ctx, "string")
-
+import com.Havhingstor.BetterTeamChat.ArgumentType.PlayerSuggestions;
+import com.Havhingstor.BetterTeamChat.ArgumentType.Utils;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
+import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.network.MessageType;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
+import net.minecraft.text.TextColor;
 
-import java.util.Collection;
-
-import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static com.mojang.brigadier.arguments.StringArgumentType.*;
+import static net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.argument;
+import static net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal;
 
 public class Commands {
-    public static void registerCommands(CommandDispatcher dispatcher) {
+    public static void registerCommands(CommandDispatcher<FabricClientCommandSource> dispatcher) {
 
         dispatcher.register(literal("globalmsg").then(argument("global message", greedyString()).executes(context -> {
             ChatMsgHandler.jumpOver = true;
-            MinecraftClient.getInstance().player.sendChatMessage(StringArgumentType.getString(context, "global message"));
+            MinecraftClient.getInstance().player.sendChatMessage(getString(context, "global message"));
             ChatMsgHandler.jumpOver = false;
             return 1;
         })));
@@ -40,12 +38,22 @@ public class Commands {
             return 1;
         }));
 
-        dispatcher.register(literal("stdChatPlayer").then(argument("Player", EntityArgumentType.players()).executes(context -> {
-            Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "Player");
-            ChatMsgHandler.setPlayers(players);
-            MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("Using playerchat with " + ChatMsgHandler.getPlayerStrings()), MinecraftClient.getInstance().player.getUuid());
+        dispatcher.register(literal("stdChatPlayer").then(argument("Player", word()).suggests(new PlayerSuggestions()).executes(context -> {
 
-            return 1;
+            String player = getString(context, "Player");
+
+            if(Utils.isPlayer(player)) {
+
+                ChatMsgHandler.setPlayer(player);
+                MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("Using playerchat with "
+                        + player), MinecraftClient.getInstance().player.getUuid());
+
+                return 1;
+            } else {
+                MinecraftClient.getInstance().player.sendMessage(new LiteralText("No player with name \"" + player + "\" found!").setStyle(Style.EMPTY.withColor(TextColor.parse("red"))), false);
+
+                return -1;
+            }
         })));
 
         dispatcher.register(literal("stdChat").executes(context -> {

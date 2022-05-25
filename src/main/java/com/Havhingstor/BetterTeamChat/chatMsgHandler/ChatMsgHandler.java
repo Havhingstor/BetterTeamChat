@@ -2,14 +2,14 @@ package com.Havhingstor.BetterTeamChat.chatMsgHandler;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.client.network.PlayerListEntry;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 public class ChatMsgHandler {
     private static ChatMsgType type = ChatMsgType.GLOBAL;
-    private static Collection<ServerPlayerEntity> players = null;
+    private static String player = null;
 
     public static boolean jumpOver = false;
 
@@ -21,27 +21,25 @@ public class ChatMsgHandler {
         } else if(type == ChatMsgType.TEAM) {
             localPlayer.sendChatMessage("/teammsg " + message);
         } else {
-            for(ServerPlayerEntity player: players) {
-                localPlayer.sendChatMessage("/msg " + player.getEntityName() + " " + message);
-            }
+            localPlayer.sendChatMessage("/msg " + player + " " + message);
         }
         jumpOver = false;
     }
 
     public static void setGlobal() {
         type = ChatMsgType.GLOBAL;
-        players = null;
+        player = null;
     }
 
     public static void setTeam() {
         type = ChatMsgType.TEAM;
-        players = null;
+        player = null;
     }
 
-    public static void setPlayers(Collection<ServerPlayerEntity> players) {
-        if(players.size() > 0) {
+    public static void setPlayer(String player) {
+        if(player != null) {
             type = ChatMsgType.PLAYER;
-            ChatMsgHandler.players = players;
+            ChatMsgHandler.player = player;
         }
     }
 
@@ -52,31 +50,8 @@ public class ChatMsgHandler {
             case GLOBAL:
                 return "globally";
             default:
-                return "the player" + getExtendedPlayerString();
+                return "the player " + player;
         }
-    }
-
-    private static String getExtendedPlayerString() {
-        String result = " ";
-
-        if (players.size() > 1) {
-            result = "s" + result;
-        }
-
-        result += getPlayerStrings();
-
-        return result;
-    }
-
-    public static String getPlayerStrings() {
-        Iterator<ServerPlayerEntity> iterator = players.iterator();
-        String result = iterator.next().getEntityName();
-
-        while (iterator.hasNext()) {
-            result += ", " + iterator.next().getEntityName();
-        }
-
-        return result;
     }
 }
 
