@@ -1,9 +1,9 @@
-# Fabric Example Mod
+# BetterTeamChat
 
-## Setup
+This minecraft/fabric mod allows the user to automatically send their messages to their team or a specific player, without the need to use the default commands.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## How to use:
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Set the current target for plain text chat messages with `/stdChatGlobal`, `/stdChatTeam` or `/stdChatPlayer <Player>`, the current state can be queried with `/stdChat`.
+  
+If the current state isn't global, but one specific message should be sent in the global chat, `/globalmsg <global message>` should be used. 
