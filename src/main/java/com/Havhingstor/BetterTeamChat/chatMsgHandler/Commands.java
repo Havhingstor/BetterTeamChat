@@ -45,7 +45,7 @@ public class Commands {
             if(Utils.isPlayer(player)) {
 
                 ChatMsgHandler.setPlayer(player);
-                MinecraftClient.getInstance().player.sendMessage(MutableText.of(new LiteralTextContent("Using playerchat with" + player)));
+                MinecraftClient.getInstance().player.sendMessage(MutableText.of(new LiteralTextContent("Using playerchat with " + player)));
 
                 return 1;
             } else {
