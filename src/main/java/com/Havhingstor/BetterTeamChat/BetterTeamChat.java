@@ -2,7 +2,7 @@ package com.havhingstor.BetterTeamChat;
 
 import com.havhingstor.BetterTeamChat.chatMsgHandler.Commands;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +11,8 @@ public class BetterTeamChat implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		Commands.registerCommands(ClientCommandManager.DISPATCHER);
+		ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> {
+			Commands.registerCommands(dispatcher);
+		}));
 	}
 }

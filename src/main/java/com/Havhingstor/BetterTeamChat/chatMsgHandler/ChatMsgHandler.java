@@ -15,9 +15,9 @@ public class ChatMsgHandler {
         if(type == ChatMsgType.GLOBAL) {
             localPlayer.sendChatMessage(message);
         } else if(type == ChatMsgType.TEAM) {
-            localPlayer.sendChatMessage("/teammsg " + message);
+            localPlayer.sendCommand("teammsg " + message);
         } else {
-            localPlayer.sendChatMessage("/msg " + player + " " + message);
+            localPlayer.sendCommand("msg " + player + " " + message);
         }
         jumpOver = false;
     }
