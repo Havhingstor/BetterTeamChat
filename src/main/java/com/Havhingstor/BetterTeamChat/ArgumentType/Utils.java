@@ -1,4 +1,4 @@
-package com.Havhingstor.BetterTeamChat.ArgumentType;
+package com.havhingstor.BetterTeamChat.ArgumentType;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.PlayerListEntry;

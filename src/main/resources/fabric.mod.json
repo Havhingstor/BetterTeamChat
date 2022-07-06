@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.Havhingstor.BetterTeamChat.BetterTeamChat"
+      "com.havhingstor.BetterTeamChat.BetterTeamChat"
     ]
   },
   "mixins": [

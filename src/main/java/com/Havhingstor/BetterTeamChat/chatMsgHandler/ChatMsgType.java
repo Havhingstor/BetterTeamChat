@@ -1,4 +1,4 @@
-package com.Havhingstor.BetterTeamChat.chatMsgHandler;
+package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
 public enum ChatMsgType {
     GLOBAL,

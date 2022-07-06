@@ -1,7 +1,7 @@
-package com.Havhingstor.BetterTeamChat.chatMsgHandler;
+package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
-import com.Havhingstor.BetterTeamChat.ArgumentType.PlayerSuggestions;
-import com.Havhingstor.BetterTeamChat.ArgumentType.Utils;
+import com.havhingstor.BetterTeamChat.ArgumentType.PlayerSuggestions;
+import com.havhingstor.BetterTeamChat.ArgumentType.Utils;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;

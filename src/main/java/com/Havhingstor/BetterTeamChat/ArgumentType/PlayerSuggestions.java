@@ -1,4 +1,4 @@
-package com.Havhingstor.BetterTeamChat.ArgumentType;
+package com.havhingstor.BetterTeamChat.ArgumentType;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

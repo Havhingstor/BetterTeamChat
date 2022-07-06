@@ -1,11 +1,7 @@
-package com.Havhingstor.BetterTeamChat.chatMsgHandler;
+package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.PlayerListEntry;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 public class ChatMsgHandler {
     private static ChatMsgType type = ChatMsgType.GLOBAL;

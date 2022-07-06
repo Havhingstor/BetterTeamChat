@@ -1,6 +1,6 @@
-package com.Havhingstor.BetterTeamChat.mixin;
+package com.havhingstor.BetterTeamChat.mixin;
 
-import com.Havhingstor.BetterTeamChat.chatMsgHandler.ChatMsgHandler;
+import com.havhingstor.BetterTeamChat.chatMsgHandler.ChatMsgHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
