@@ -1,5 +1,6 @@
 package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
+import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
@@ -12,7 +13,6 @@ public class StandardTeamType implements CustomTeamType{
 
     @Override
     public void sendMessage(String message) {
-        ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
-        localPlayer.sendCommand("teammsg " + message);
+        BetterTeamChat.sendCommand("teammsg " + message);
     }
 }

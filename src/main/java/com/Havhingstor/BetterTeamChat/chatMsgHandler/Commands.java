@@ -37,7 +37,7 @@ public class Commands {
             }
 
             ChatMsgHandler.setGlobal();
-            getLocalPlayer().sendMessage(Text.literal("Using global chat"), false);
+            getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using global chat"), false);
 
             return 1;
         }));
@@ -49,11 +49,11 @@ public class Commands {
 
             if(ChatMsgHandler.isInTeam()) {
                 ChatMsgHandler.setTeam();
-                getLocalPlayer().sendMessage(Text.literal("Using team chat"), false);
+                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using team chat"), false);
 
                 return 1;
             } else {
-                getLocalPlayer().sendMessage( Text.literal(BetterTeamChat.teamFailMessage).setStyle(ChatMsgHandler.errorStyle), false);
+                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString(BetterTeamChat.teamFailMessage).setStyle(ChatMsgHandler.errorStyle), false);
 
                 return -1;
             }
@@ -69,11 +69,11 @@ public class Commands {
             if(Utils.isPlayer(player)) {
 
                 ChatMsgHandler.setPlayer(player);
-                getLocalPlayer().sendMessage(Text.literal("Using playerchat with " + player), false);
+                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using playerchat with " + player), false);
 
                 return 1;
             } else {
-                getLocalPlayer().sendMessage( Text.literal("No player with name \"" + player + "\" found!").setStyle(ChatMsgHandler.errorStyle), false);
+                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("No player with name \"" + player + "\" found!").setStyle(ChatMsgHandler.errorStyle), false);
 
                 return -1;
             }
@@ -84,7 +84,7 @@ public class Commands {
                 return -1;
             }
 
-            getLocalPlayer().sendMessage(Text.literal("You message " + ChatMsgHandler.getType() + "."), false);
+            getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("You message " + ChatMsgHandler.getType() + "."), false);
 
             return 1;
         }));

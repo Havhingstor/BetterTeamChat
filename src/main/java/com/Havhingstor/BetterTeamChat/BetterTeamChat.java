@@ -1,10 +1,15 @@
 package com.havhingstor.BetterTeamChat;
 
+import com.havhingstor.BetterTeamChat.chatMsgHandler.ChatMsgHandler;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.Commands;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.CustomTeamType;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.StandardTeamType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +27,20 @@ public class BetterTeamChat implements ClientModInitializer {
 
 	public static void registerTeamType(CustomTeamType type) {
 		customTeamTypes.add(type);
+	}
+
+	public static MutableText getTextOfString(String message) {
+		return Text.literal(message);
+	}
+
+	public static void sendCommand(String command) {
+		ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
+
+		if(localPlayer == null) {
+			return;
+		}
+
+		localPlayer.sendCommand(command);
 	}
 
 	@Override

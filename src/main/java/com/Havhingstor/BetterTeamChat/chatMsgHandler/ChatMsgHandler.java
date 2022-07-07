@@ -27,10 +27,10 @@ public class ChatMsgHandler {
     private static void sendFailMessage(String failMessage, String originalMessage) {
         ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
 
-        localPlayer.sendMessage( Text.literal(failMessage)
+        localPlayer.sendMessage(BetterTeamChat.getTextOfString(failMessage)
                 .setStyle(errorStyle), false);
-        localPlayer.sendMessage( Text.literal("You now message globally."), false);
-        localPlayer.sendMessage( Text.literal("The original message is copied to the clipboard."), false);
+        localPlayer.sendMessage(BetterTeamChat.getTextOfString("You now message globally."), false);
+        localPlayer.sendMessage(BetterTeamChat.getTextOfString("The original message is copied to the clipboard."), false);
         type = ChatMsgType.GLOBAL;
         MinecraftClient.getInstance().keyboard.setClipboard(originalMessage);
     }
@@ -61,7 +61,7 @@ public class ChatMsgHandler {
 
         } else {
             if(Utils.isPlayer(player)) {
-                localPlayer.sendCommand("msg " + player + " " + message);
+                BetterTeamChat.sendCommand("msg " + player + " " + message);
             } else {
                 sendFailMessage("No player with name \"" + player + "\" found!", message);
             }
