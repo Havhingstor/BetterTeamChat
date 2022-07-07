@@ -19,7 +19,7 @@ public class Utils {
     }
 
     static List<String> getSuggestions(String name) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         for(PlayerListEntry player: getPlayerList()) {
             if(player.getProfile().getName().startsWith(name)) {

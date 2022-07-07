@@ -1,23 +1,63 @@
 package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
+import com.havhingstor.BetterTeamChat.ArgumentType.Utils;
+import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.text.*;
 
 public class ChatMsgHandler {
     private static ChatMsgType type = ChatMsgType.GLOBAL;
     private static String player = null;
+    protected static Style errorStyle = Style.EMPTY.withColor(TextColor.parse("red"));
 
     public static boolean jumpOver = false;
 
-    public static void getMsg(String message) {
+    public static boolean isInTeam() {
+        for(CustomTeamType type: BetterTeamChat.getCustomTeamTypes()) {
+            if(type.isInTeam()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void sendFailMessage(String failMessage, String originalMessage) {
         ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
+
+        localPlayer.sendMessage( Text.literal(failMessage)
+                .setStyle(errorStyle), false);
+        localPlayer.sendMessage( Text.literal("You now message globally."), false);
+        localPlayer.sendMessage( Text.literal("The original message is copied to the clipboard."), false);
+        type = ChatMsgType.GLOBAL;
+        MinecraftClient.getInstance().keyboard.setClipboard(originalMessage);
+    }
+
+    public static void getMsg(String message) {
+       ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
         jumpOver = true;
         if(type == ChatMsgType.GLOBAL) {
             localPlayer.sendChatMessage(message);
         } else if(type == ChatMsgType.TEAM) {
-            localPlayer.sendCommand("teammsg " + message);
+            boolean wasInTeam = false;
+
+            for(CustomTeamType type: BetterTeamChat.getCustomTeamTypes()) {
+                if(type.isInTeam()) {
+                    wasInTeam = true;
+                    type.sendMessage(message);
+                }
+            }
+
+            if(!wasInTeam) {
+                sendFailMessage(BetterTeamChat.teamFailMessage, message);
+            }
+
         } else {
-            localPlayer.sendCommand("msg " + player + " " + message);
+            if(Utils.isPlayer(player)) {
+                localPlayer.sendCommand("msg " + player + " " + message);
+            } else {
+                sendFailMessage("No player with name \"" + player + "\" found!", message);
+            }
         }
         jumpOver = false;
     }
