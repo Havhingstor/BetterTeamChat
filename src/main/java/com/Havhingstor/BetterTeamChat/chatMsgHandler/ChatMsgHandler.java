@@ -6,6 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.*;
 
+import java.util.List;
+
 public class ChatMsgHandler {
     private static ChatMsgType type = ChatMsgType.GLOBAL;
     private static String player = null;
@@ -35,6 +37,11 @@ public class ChatMsgHandler {
 
     public static void getMsg(String message) {
        ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
+
+       if(localPlayer == null) {
+           return;
+       }
+
         jumpOver = true;
         if(type == ChatMsgType.GLOBAL) {
             localPlayer.sendChatMessage(message);

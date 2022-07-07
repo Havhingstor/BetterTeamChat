@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BetterTeamChat implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("betterteamchat");
-	private static List<CustomTeamType> customTeamTypes = new ArrayList<CustomTeamType>();
+	private static List<CustomTeamType> customTeamTypes = new ArrayList<>();
 	public static String teamFailMessage = "You are not in a team";
 
 	public static List<CustomTeamType> getCustomTeamTypes() {

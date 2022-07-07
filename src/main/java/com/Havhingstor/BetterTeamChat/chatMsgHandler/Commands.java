@@ -14,60 +14,77 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.arg
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class Commands {
+
+    private static ClientPlayerEntity getLocalPlayer() {
+        return MinecraftClient.getInstance().player;
+    }
+
     public static void registerCommands(CommandDispatcher<FabricClientCommandSource> dispatcher) {
-        ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
-
-        if(localPlayer == null) {
-            return;
-        }
-
         dispatcher.register(literal("globalmsg").then(argument("global message", greedyString()).executes(context -> {
+            if(getLocalPlayer() == null) {
+                return -1;
+            }
+
             ChatMsgHandler.jumpOver = true;
-            localPlayer.sendChatMessage(getString(context, "global message"));
+            getLocalPlayer().sendChatMessage(getString(context, "global message"));
             ChatMsgHandler.jumpOver = false;
             return 1;
         })));
 
         dispatcher.register(literal("stdChatGlobal").executes(context -> {
+            if(getLocalPlayer() == null) {
+                return -1;
+            }
+
             ChatMsgHandler.setGlobal();
-            localPlayer.sendMessage(Text.literal("Using global chat"));
+            getLocalPlayer().sendMessage(Text.literal("Using global chat"), false);
 
             return 1;
         }));
 
         dispatcher.register(literal("stdChatTeam").executes(context -> {
+            if(getLocalPlayer() == null) {
+                return -1;
+            }
 
             if(ChatMsgHandler.isInTeam()) {
                 ChatMsgHandler.setTeam();
-                localPlayer.sendMessage(Text.literal("Using team chat"));
+                getLocalPlayer().sendMessage(Text.literal("Using team chat"), false);
 
                 return 1;
             } else {
-                localPlayer.sendMessage( Text.literal(BetterTeamChat.teamFailMessage).setStyle(ChatMsgHandler.errorStyle), false);
+                getLocalPlayer().sendMessage( Text.literal(BetterTeamChat.teamFailMessage).setStyle(ChatMsgHandler.errorStyle), false);
 
                 return -1;
             }
         }));
 
         dispatcher.register(literal("stdChatPlayer").then(argument("Player", word()).suggests(new PlayerSuggestions()).executes(context -> {
+            if(getLocalPlayer() == null) {
+                return -1;
+            }
 
             String player = getString(context, "Player");
 
             if(Utils.isPlayer(player)) {
 
                 ChatMsgHandler.setPlayer(player);
-                localPlayer.sendMessage(Text.literal("Using playerchat with " + player));
+                getLocalPlayer().sendMessage(Text.literal("Using playerchat with " + player), false);
 
                 return 1;
             } else {
-                localPlayer.sendMessage( Text.literal("No player with name \"" + player + "\" found!").setStyle(ChatMsgHandler.errorStyle), false);
+                getLocalPlayer().sendMessage( Text.literal("No player with name \"" + player + "\" found!").setStyle(ChatMsgHandler.errorStyle), false);
 
                 return -1;
             }
         })));
 
         dispatcher.register(literal("stdChat").executes(context -> {
-            MinecraftClient.getInstance().player.sendMessage(MutableText.of(new LiteralTextContent("You message " + ChatMsgHandler.getType() + ".")));
+            if(getLocalPlayer() == null) {
+                return -1;
+            }
+
+            getLocalPlayer().sendMessage(Text.literal("You message " + ChatMsgHandler.getType() + "."), false);
 
             return 1;
         }));
