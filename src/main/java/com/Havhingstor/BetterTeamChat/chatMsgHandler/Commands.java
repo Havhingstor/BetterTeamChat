@@ -26,7 +26,7 @@ public class Commands {
             }
 
             ChatMsgHandler.jumpOver = true;
-            getLocalPlayer().sendChatMessage(getString(context, "global message"));
+            getLocalPlayer().sendChatMessage(getString(context, "global message"), null);
             ChatMsgHandler.jumpOver = false;
             return 1;
         })));

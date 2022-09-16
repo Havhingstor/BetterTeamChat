@@ -40,7 +40,7 @@ public class BetterTeamChat implements ClientModInitializer {
 			return;
 		}
 
-		localPlayer.sendCommand(command);
+		localPlayer.sendCommand(command, null);
 	}
 
 	@Override

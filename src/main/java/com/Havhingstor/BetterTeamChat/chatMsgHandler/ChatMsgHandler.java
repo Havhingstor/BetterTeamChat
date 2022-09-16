@@ -44,7 +44,7 @@ public class ChatMsgHandler {
 
         jumpOver = true;
         if(type == ChatMsgType.GLOBAL) {
-            localPlayer.sendChatMessage(message);
+            localPlayer.sendChatMessage(message, null);
         } else if(type == ChatMsgType.TEAM) {
             boolean wasInTeam = false;
 
