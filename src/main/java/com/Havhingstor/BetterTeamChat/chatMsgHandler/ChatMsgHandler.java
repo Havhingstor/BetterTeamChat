@@ -28,7 +28,7 @@ public class ChatMsgHandler {
         sendErrorMessageToClientPlayer(failMessage);
         sendMessageToClientPlayer("You now message globally");
         MinecraftClient.getInstance().keyboard.setClipboard(originalMessage);
-        sendErrorMessageToClientPlayer("The original message is copied to the clipboard.");
+        sendMessageToClientPlayer("The original message is copied to the clipboard.");
         type = ChatMsgType.GLOBAL;
     }
 
