@@ -5,20 +5,13 @@ import com.havhingstor.BetterTeamChat.ArgumentType.Utils;
 import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.*;
 
+import static com.havhingstor.BetterTeamChat.BetterTeamChat.*;
 import static com.mojang.brigadier.arguments.StringArgumentType.*;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class Commands {
-
-    private static ClientPlayerEntity getLocalPlayer() {
-        return MinecraftClient.getInstance().player;
-    }
-
     public static void registerCommands(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(literal("globalmsg").then(argument("global message", greedyString()).executes(context -> {
             if(getLocalPlayer() == null) {
@@ -26,7 +19,8 @@ public class Commands {
             }
 
             ChatMsgHandler.jumpOver = true;
-            getLocalPlayer().sendChatMessage(getString(context, "global message"), null);
+            String message = getString(context, "global message");
+            BetterTeamChat.sendChatMessage(message);
             ChatMsgHandler.jumpOver = false;
             return 1;
         })));
@@ -37,7 +31,7 @@ public class Commands {
             }
 
             ChatMsgHandler.setGlobal();
-            getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using global chat"), false);
+            sendMessageToClientPlayer("Using global chat");
 
             return 1;
         }));
@@ -49,11 +43,11 @@ public class Commands {
 
             if(ChatMsgHandler.isInTeam()) {
                 ChatMsgHandler.setTeam();
-                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using team chat"), false);
+                sendMessageToClientPlayer("Using team chat");
 
                 return 1;
             } else {
-                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString(BetterTeamChat.teamFailMessage).setStyle(ChatMsgHandler.errorStyle), false);
+                sendErrorMessageToClientPlayer(BetterTeamChat.teamFailMessage);
 
                 return -1;
             }
@@ -69,11 +63,11 @@ public class Commands {
             if(Utils.isPlayer(player)) {
 
                 ChatMsgHandler.setPlayer(player);
-                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("Using playerchat with " + player), false);
+                sendMessageToClientPlayer("Using playerchat with " + player);
 
                 return 1;
             } else {
-                getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("No player with name \"" + player + "\" found!").setStyle(ChatMsgHandler.errorStyle), false);
+                sendErrorMessageToClientPlayer("No player with name \"" + player + "\" found!");
 
                 return -1;
             }
@@ -84,7 +78,7 @@ public class Commands {
                 return -1;
             }
 
-            getLocalPlayer().sendMessage(BetterTeamChat.getTextOfString("You message " + ChatMsgHandler.getType() + "."), false);
+            sendMessageToClientPlayer("You message " + ChatMsgHandler.getType() + ".");
 
             return 1;
         }));

@@ -1,6 +1,5 @@
 package com.havhingstor.BetterTeamChat;
 
-import com.havhingstor.BetterTeamChat.chatMsgHandler.ChatMsgHandler;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.Commands;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.CustomTeamType;
 import com.havhingstor.BetterTeamChat.chatMsgHandler.StandardTeamType;
@@ -9,16 +8,21 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.text.Style;
+import net.minecraft.text.TextColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.minecraft.text.Text.literal;
+
 public class BetterTeamChat implements ClientModInitializer {
+	private static Style errorStyle = Style.EMPTY.withColor(TextColor.parse("red"));
+
 	public static final Logger LOGGER = LoggerFactory.getLogger("betterteamchat");
-	private static List<CustomTeamType> customTeamTypes = new ArrayList<>();
+	private static final List<CustomTeamType> customTeamTypes = new ArrayList<>();
 	public static String teamFailMessage = "You are not in a team";
 
 	public static List<CustomTeamType> getCustomTeamTypes() {
@@ -30,17 +34,29 @@ public class BetterTeamChat implements ClientModInitializer {
 	}
 
 	public static MutableText getTextOfString(String message) {
-		return Text.literal(message);
+		return literal(message);
+	}
+
+	public static ClientPlayerEntity getLocalPlayer() {
+		return MinecraftClient.getInstance().player;
 	}
 
 	public static void sendCommand(String command) {
-		ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
+		getLocalPlayer().networkHandler.sendChatCommand(command);
+	}
 
-		if(localPlayer == null) {
-			return;
-		}
+	public static void sendChatMessage(String chatMessage) {
+		getLocalPlayer().networkHandler.sendChatMessage(chatMessage);
+	}
 
-		localPlayer.sendCommand(command, null);
+	public static void sendMessageToClientPlayer(String message) {
+		ClientPlayerEntity player = getLocalPlayer();
+		player.sendMessage(getTextOfString(message), false);
+	}
+
+	public static void sendErrorMessageToClientPlayer(String message) {
+		ClientPlayerEntity player = getLocalPlayer();
+		player.sendMessage(getTextOfString(message).setStyle(errorStyle), false);
 	}
 
 	@Override

@@ -4,14 +4,14 @@ import com.havhingstor.BetterTeamChat.ArgumentType.Utils;
 import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.*;
+import net.minecraft.text.Style;
+import net.minecraft.text.TextColor;
 
-import java.util.List;
+import static com.havhingstor.BetterTeamChat.BetterTeamChat.*;
 
 public class ChatMsgHandler {
     private static ChatMsgType type = ChatMsgType.GLOBAL;
     private static String player = null;
-    protected static Style errorStyle = Style.EMPTY.withColor(TextColor.parse("red"));
 
     public static boolean jumpOver = false;
 
@@ -25,26 +25,17 @@ public class ChatMsgHandler {
     }
 
     private static void sendFailMessage(String failMessage, String originalMessage) {
-        ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
-
-        localPlayer.sendMessage(BetterTeamChat.getTextOfString(failMessage)
-                .setStyle(errorStyle), false);
-        localPlayer.sendMessage(BetterTeamChat.getTextOfString("You now message globally."), false);
-        localPlayer.sendMessage(BetterTeamChat.getTextOfString("The original message is copied to the clipboard."), false);
-        type = ChatMsgType.GLOBAL;
+        sendErrorMessageToClientPlayer(failMessage);
+        sendMessageToClientPlayer("You now message globally");
         MinecraftClient.getInstance().keyboard.setClipboard(originalMessage);
+        sendErrorMessageToClientPlayer("The original message is copied to the clipboard.");
+        type = ChatMsgType.GLOBAL;
     }
 
-    public static void getMsg(String message) {
-       ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
-
-       if(localPlayer == null) {
-           return;
-       }
-
+    public static void sendMsg(String message) {
         jumpOver = true;
         if(type == ChatMsgType.GLOBAL) {
-            localPlayer.sendChatMessage(message, null);
+            sendChatMessage(message);
         } else if(type == ChatMsgType.TEAM) {
             boolean wasInTeam = false;
 

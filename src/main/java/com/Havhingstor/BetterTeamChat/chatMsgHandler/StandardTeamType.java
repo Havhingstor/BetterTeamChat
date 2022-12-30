@@ -4,10 +4,12 @@ import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
+import static com.havhingstor.BetterTeamChat.BetterTeamChat.getLocalPlayer;
+
 public class StandardTeamType implements CustomTeamType{
     @Override
     public boolean isInTeam() {
-        ClientPlayerEntity localPlayer = MinecraftClient.getInstance().player;
+        ClientPlayerEntity localPlayer = getLocalPlayer();
         return MinecraftClient.getInstance().world.getScoreboard().getPlayerTeam(localPlayer.getEntityName()) != null;
     }
 
