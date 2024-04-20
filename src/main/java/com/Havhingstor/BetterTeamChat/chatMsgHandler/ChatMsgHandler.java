@@ -3,9 +3,6 @@ package com.havhingstor.BetterTeamChat.chatMsgHandler;
 import com.havhingstor.BetterTeamChat.ArgumentType.Utils;
 import com.havhingstor.BetterTeamChat.BetterTeamChat;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextColor;
 
 import static com.havhingstor.BetterTeamChat.BetterTeamChat.*;
 
@@ -78,14 +75,11 @@ public class ChatMsgHandler {
     }
 
     public static String getType() {
-        switch (type) {
-            case TEAM:
-                return "your team";
-            case GLOBAL:
-                return "globally";
-            default:
-                return "the player " + player;
-        }
+        return switch (type) {
+            case TEAM -> "your team";
+            case GLOBAL -> "globally";
+            default -> "the player " + player;
+        };
     }
 }
 

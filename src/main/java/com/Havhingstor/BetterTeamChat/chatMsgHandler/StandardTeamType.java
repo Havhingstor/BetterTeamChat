@@ -1,7 +1,6 @@
 package com.havhingstor.BetterTeamChat.chatMsgHandler;
 
 import com.havhingstor.BetterTeamChat.BetterTeamChat;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 import static com.havhingstor.BetterTeamChat.BetterTeamChat.getLocalPlayer;

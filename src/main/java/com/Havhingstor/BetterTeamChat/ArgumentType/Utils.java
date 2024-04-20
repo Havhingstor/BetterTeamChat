@@ -1,6 +1,7 @@
 package com.havhingstor.BetterTeamChat.ArgumentType;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 
 import java.util.ArrayList;
@@ -30,7 +31,12 @@ public class Utils {
     }
 
     private static Collection<PlayerListEntry> getPlayerList() {
-        return MinecraftClient.getInstance().player.networkHandler.getPlayerList();
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        if (player != null) {
+            return MinecraftClient.getInstance().player.networkHandler.getPlayerList();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 }

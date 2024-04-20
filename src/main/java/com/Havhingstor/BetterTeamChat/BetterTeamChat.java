@@ -9,7 +9,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
-import net.minecraft.text.TextColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +18,8 @@ import java.util.List;
 import static net.minecraft.text.Text.literal;
 
 public class BetterTeamChat implements ClientModInitializer {
-	private static Style errorStyle = Style.EMPTY.withColor(0xFF0000);
+	private static final Style errorStyle = Style.EMPTY.withColor(0xFF0000);
 
-	public static final Logger LOGGER = LoggerFactory.getLogger("betterteamchat");
 	private static final List<CustomTeamType> customTeamTypes = new ArrayList<>();
 	public static String teamFailMessage = "You are not in a team";
 
@@ -62,8 +60,6 @@ public class BetterTeamChat implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		registerTeamType(new StandardTeamType());
-		ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> {
-			Commands.registerCommands(dispatcher);
-		}));
+		ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> Commands.registerCommands(dispatcher)));
 	}
 }
