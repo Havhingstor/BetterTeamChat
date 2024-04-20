@@ -1,35 +1,31 @@
 {
-  "schemaVersion": 1,
-  "id": "betterteamchat",
-  "version": "${version}",
-
-  "name": "BetterTeamChat",
-  "description": "Allows the user to automatically send their messages to their team or a specific player, without the need to use the default commands.",
-  "authors": [
-    "Havhingstor"
-  ],
-  "contact": {
-    "sources": "https://github.com/Havhingstor/BetterTeamChat",
-    "issues": "https://github.com/Havhingstor/BetterTeamChat/issues"
-  },
-
-  "license": "MIT",
-  "icon": "assets/betterteamchat/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "client": [
-      "com.havhingstor.BetterTeamChat.BetterTeamChat"
-    ]
-  },
-  "mixins": [
-    "betterteamchat.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.14.6",
-    "fabric": "*",
-    "minecraft": "~1.20",
-    "java": ">=17"
-  }
+	"schemaVersion": 1,
+	"id": "betterteamchat",
+	"version": "${version}",
+	"name": "BetterTeamChat",
+	"description": "Allows the user to automatically send their messages to their team or a specific player, without the need to use the default commands.",
+	"authors": [
+		"Havhingstor"
+	],
+	"contact": {
+		"sources": "https://github.com/Havhingstor/BetterTeamChat",
+		"issues": "https://github.com/Havhingstor/BetterTeamChat/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/betterteamchat/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.havhingstor.BetterTeamChat.BetterTeamChat"
+		]
+	},
+	"mixins": [
+		"betterteamchat.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.10",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
 }

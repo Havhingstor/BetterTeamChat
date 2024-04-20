@@ -10,7 +10,7 @@ public class StandardTeamType implements CustomTeamType{
     @Override
     public boolean isInTeam() {
         ClientPlayerEntity localPlayer = getLocalPlayer();
-        return MinecraftClient.getInstance().world.getScoreboard().getPlayerTeam(localPlayer.getEntityName()) != null;
+        return localPlayer.getScoreboardTeam() != null;
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.List;
 import static net.minecraft.text.Text.literal;
 
 public class BetterTeamChat implements ClientModInitializer {
-	private static Style errorStyle = Style.EMPTY.withColor(TextColor.parse("red"));
+	private static Style errorStyle = Style.EMPTY.withColor(0xFF0000);
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("betterteamchat");
 	private static final List<CustomTeamType> customTeamTypes = new ArrayList<>();
